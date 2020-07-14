@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlazorServer.Data;
+using System.Net.Http;
 
 namespace BlazorServer
 {
@@ -26,9 +27,16 @@ namespace BlazorServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+           
+            //services.AddHttpClient<IEmployee, EmployeeRepository>(option =>
+            //{
+            //    option.BaseAddress = new Uri("https://localhost:44352/");
+            //});
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<HttpClient>();
+            services.AddSingleton<IEmployee, EmployeeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

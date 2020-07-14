@@ -9,27 +9,22 @@ namespace BlazorServer.Pages
 {
     public class EmployeeListBase : ComponentBase
     {
-        public IEnumerable<Employee> Employees { get; set; }
-        protected override Task OnInitializedAsync()
+        [Inject]
+        public IEmployee employeeService { get; set; }
+        public List<People> Employees;
+       
+    
+       
+
+      
+        protected override async Task OnInitializedAsync()
         {
-            GetEmployee();
-            return base.OnInitializedAsync();
+
+            Employees = new List<People>();
+            Employees = (await employeeService.GetEmployee()).ToList();
+            // GetEmployee();
+            
         }
-        private void GetEmployee()
-        {
-            var employee1 = new Employee
-            {
-                id = 1,
-                Name = "Tom",
-                Designation = "TechLead"
-            };
-            var employee2 = new Employee
-            {
-                id = 2,
-                Name = "Harry",
-                Designation = "Software Engineer"
-            };
-            Employees = new List<Employee> { employee1, employee2 };
-        }
+        
     }
 }
