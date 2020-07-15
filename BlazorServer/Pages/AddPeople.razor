@@ -1,0 +1,32 @@
+﻿@page "/AddPeople"
+@inject HttpClient httpclient;
+<h3>Add People</h3>
+<EditForm Model="@people" OnSubmit="@SavePeople">
+    <div class=" form-group">
+        <label for="Name">
+            Name
+        </label>
+        <InputText @bind-Value="@people.name" />
+        <label for="Age">
+            Age
+        </label>
+        <InputNumber @bind-Value="@people.age" />
+        <label for="Name">
+            Designation
+        </label>
+        <InputText @bind-Value="@people.designation" />
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+
+    BlazorServer.Data.People people = new Data.People();
+
+    private  async Task SavePeople()
+    {
+        var results = await httpclient.PostJsonAsync<BlazorServer.Data.People>("", people);
+         
+    }
+
+}
