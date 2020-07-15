@@ -1,32 +1,32 @@
 ﻿@page "/AddPeople"
 @inject HttpClient httpclient;
 <h3>Add People</h3>
-<EditForm Model="@people" OnSubmit="@SavePeople">
+<EditForm Model="@product" OnSubmit="@SaveProduct">
     <div class=" form-group">
-        <label for="Name">
-            Name
+        <label for="item">
+          Item  Name
         </label>
-        <InputText @bind-Value="@people.name" />
-        <label for="Age">
-            Age
+        <InputText @bind-Value="@product.item" />
+        <label for="qty">
+            Quantity
         </label>
-        <InputNumber @bind-Value="@people.age" />
-        <label for="Name">
-            Designation
-        </label>
-        <InputText @bind-Value="@people.designation" />
+        <InputText @bind-Value="@product.qty" />
+   
     </div>
     <button class="btn btn-primary">Submit</button>
 </EditForm>
 
 @code {
 
-    BlazorServer.Data.People people = new Data.People();
+    BlazorServer.Data.Product product = new Data.Product();
 
-    private  async Task SavePeople()
+    private async  Task SaveProduct()
     {
-        var results = await httpclient.PostJsonAsync<BlazorServer.Data.People>("", people);
-         
+
+        httpclient.DefaultRequestHeaders.Accept.Add(
+                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        await httpclient.PostJsonAsync("https://localhost:44354/api/ProductApi", product);
+
     }
 
 }
