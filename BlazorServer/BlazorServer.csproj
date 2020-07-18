@@ -9,4 +9,8 @@
     <PackageReference Include="MongoDB.Bson" Version="2.10.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AWSService\AWSService.csproj" />
+  </ItemGroup>
+
 </Project>

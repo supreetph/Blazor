@@ -1,5 +1,7 @@
 ﻿@page "/AddPeople"
 @inject HttpClient httpclient;
+
+
 <h3>Add People</h3>
 <EditForm Model="@product" OnSubmit="@SaveProduct">
     <div class=" form-group">
@@ -26,7 +28,11 @@
         httpclient.DefaultRequestHeaders.Accept.Add(
                  new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         await httpclient.PostJsonAsync("https://localhost:44354/api/ProductApi", product);
-
+        AWSService.AWSSQSHelper sqs = new AWSService.AWSSQSHelper();
+        Amazon.SQS.Model.Message msg = new Amazon.SQS.Model.Message();
+        msg.Body = product.item.ToString();
+        sqs.SendMessage("https://sqs.us-west-2.amazonaws.com/833422457327/ProductQueue", msg);
     }
+
 
 }
